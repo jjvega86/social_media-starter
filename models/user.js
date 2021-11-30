@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const userSchema = mongoose.Schema({
   name: { type: String, required: true, minLength: 5, maxLength: 50 },
@@ -21,7 +22,7 @@ userSchema.methods.generateAuthToken = function () {
       name: this.name,
       email: this.email,
     },
-    process.env.JWT_SECRET
+    config.get("JWT_SECRET")
   );
 };
 
